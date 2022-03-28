@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Member">
+
+    <select id="selectMemberOne" parameterType="String" resultType="com.example.dto.MemberDTO">
+        SELECT M.* FROM MEMBER M WHERE M.UEMAIL=#{uemail}
+    </select>
+
+    <select id="selectMemberList" resultType="com.example.dto.MemberDTO">
+        SELECT M.*,TO_CHAR(UREGDATE, 'YYYY-DD-MM') UREGDATE1 FROM MEMBER M
+    </select>
+
+    <insert id="insertMemberOne" parameterType="com.example.dto.MemberDTO">
+        INSERT INTO MEMBER(UEMAIL, UPW, UNAME, UPHONE, UROLE)
+        VALUES(#{uemail}, #{upw}, #{uname}, #{uphone}, #{urole})
+    </insert>
+
+    <delete id="deleteMemberOne" parameterType="String">
+        DELETE FROM MEMBER WHERE UEMAIL=#{uemail}
+    </delete>
+
+    <update id="updateMemberOne" parameterType="com.example.dto.MemberDTO">
+        UPDATE MEMBER SET UNAME=#{uname}, UPHONE=#{uphone} WHERE UEMAIL=#{uemail}
+    </update>
+
+</mapper>
+
+<!-- 
+위의 xml을 java로 변경했을 때 코드
+public class Member {
+    public int static insertMemberOne(MemberDTO member) {
+        INSERT INTO ....
+    }
+}
+
+Member obj = new Member();
+obj.insertMemberOne();
+
+Member.insertMemberOne(); 
+-->

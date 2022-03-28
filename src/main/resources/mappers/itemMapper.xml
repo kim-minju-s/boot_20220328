@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Item">
+
+    <insert id="insertItemOne" parameterType="com.example.dto.ItemDTO">
+        INSERT INTO ITEM(ICODE, INAME, ICONTENT, IPRICE, IQUANTITY, IIMAGE, IIMAGESIZE, IIMAGETYPE, IIMAGENAME, UEMAIL)
+        VALUES(#{icode}, #{iname}, #{icontent}, #{iprice}, #{iquantity}, #{iimage}, #{iimagesize}, #{iimagetype}, #{iimagename}, #{uemail})
+    </insert>
+
+</mapper>
+
+<!-- 
+위의 xml을 java로 변경했을 때 코드
+public class Member {
+    public int static insertMemberOne(MemberDTO member) {
+        INSERT INTO ....
+    }
+}
+
+Member obj = new Member();
+obj.insertMemberOne();
+
+Member.insertMemberOne(); 
+-->
