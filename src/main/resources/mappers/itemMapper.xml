@@ -5,21 +5,24 @@
 
     <insert id="insertItemOne" parameterType="com.example.dto.ItemDTO">
         INSERT INTO ITEM(ICODE, INAME, ICONTENT, IPRICE, IQUANTITY, IIMAGE, IIMAGESIZE, IIMAGETYPE, IIMAGENAME, UEMAIL)
-        VALUES(#{icode}, #{iname}, #{icontent}, #{iprice}, #{iquantity}, #{iimage}, #{iimagesize}, #{iimagetype}, #{iimagename}, #{uemail})
+        VALUES(SEQ_ITEM_ICODE.NEXTVAL, #{iname}, #{icontent}, #{iprice}, #{iquantity}, #{iimage, jdbcType=BLOB}, #{iimagesize}, #{iimagetype}, #{iimagename}, #{uemail})
     </insert>
 
+    <select id="selectItemList" parameterType="map" resultType="com.example.dto.ItemDTO">
+        SELECT*FROM (
+            SELECT
+                I.ICODE, I.INAME, I.IPRICE, I.IQUANTITY, I.IREGDATE, ROW_NUMBER() OVER (ORDER BY ICODE DESC) ROWN 
+            FROM ITEM I
+            WHERE I.INAME LIKE '%' || #{txt} || '%'
+        )
+        WHERE ROWN BETWEEN #{start} AND #{end}
+    </select>
+
+    <select id="selectItemCount" parameterType="String" resultType="long">
+            SELECT
+                COUNT(*) CNT 
+            FROM ITEM I
+            WHERE I.INAME LIKE '%' || #{txt} || '%'
+    </select>
+
 </mapper>
-
-<!-- 
-위의 xml을 java로 변경했을 때 코드
-public class Member {
-    public int static insertMemberOne(MemberDTO member) {
-        INSERT INTO ....
-    }
-}
-
-Member obj = new Member();
-obj.insertMemberOne();
-
-Member.insertMemberOne(); 
--->

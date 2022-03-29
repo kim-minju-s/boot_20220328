@@ -10,14 +10,13 @@
     <div>
         <h3>등록</h3>
         <hr />
-        <form th:action="@{/item/insert}" method="post">
+        <form th:action="@{/item/insert}" method="post" enctype="multipart/form-data">
             
-            물품이름: <input type="text" name="iname" /> <br />
-            물품내용: <input type="text" name="icontent" /> <br />
-            가격: <input type="text" name="iprice" /> <br />
-            수량: <input type="number" name="iquantity" /> <br />
-            이미지: <input type="file" /> <br />
-            판매자이메일: <input type="text" name="uemail" /> <br />
+            물품이름    : <input type="text" name="iname" /> <br />
+            물품내용    : <textarea name="icontent" cols="" rows="6"></textarea> <br />
+            가격    : <input type="text" name="iprice" /> <br />
+            수량    : <input type="number" name="iquantity" /> <br />
+            이미지  : <input type="file" name="timage" /> <br />
             <input type="submit" value="물품등록">
         </form>
     </div>

@@ -7,6 +7,22 @@
     <title>home</title>
 </head>
 <body>
-    home 화면입니다.
+    <div>
+        <h3>홈 화면</h3>
+        <hr />
+        <p th:text="${session.SESSION_EMAIL}"></p>
+
+        <div th:if="${session.SESSION_EMAIL == null}">
+            <a th:href="@{/seller/select}"> 판매자 로그인 </a>
+            <a th:href="@{/seller/insert}"> 판매자 등록 </a>
+        </div>
+
+        <div th:if="${session.SESSION_EMAIL != null}">
+            <a th:href="@{/item/insert}"> 판매자 물품 등록 </a>
+            <a th:href="@{/seller/logout}"> 로그아웃 </a>
+        </div>
+
+        <a th:href="@{/seller/selectlist}"> 판매자 목록(운영자용) </a>
+    </div>
 </body>
 </html>

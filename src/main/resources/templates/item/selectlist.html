@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물품 목록</title>
+</head>
+<body>
+    <div>
+        <h3>물품 목록</h3>
+        <hr />
+        <a th:href="@{/item/insert}">물품추가</a>
+        <form th:action="@{/item/selectlist}">
+            <input type="text" name="txt" />
+            <input type="submit" value="검색" />
+        </form>
+        
+        <table border="1">
+            <tr>
+                <th>번호</th>
+                <th>물품코드</th>
+                <th>이름</th>
+                <th>가격</th>
+                <th>수량</th>
+                <th>등록일</th>
+            </tr>
+            <tr th:each="tmp, idx : ${list}">
+                <td th:text="${idx.count}"></td>
+                <td>
+                    <a th:href="@{/item/selectOne(code=${tmp.icode})}" th:text="${tmp.icode}"></a>
+                </td>
+                <td th:text="${tmp.iname}"></td>
+                <td th:text="${tmp.iprice}"></td>
+                <td th:text="${tmp.iquantity}"></td>
+                <td th:text="${tmp.iregdate}"></td>
+                
+            </tr>
+        </table>
+        <th:block th:each="i: ${#numbers.sequence(1, pages)}">
+            <a th:href="@{/item/selectlist(page=${i}, txt=${param.txt})}" th:text="${i}"></a>
+        </th:block>
+    </div>
+</body>
+</html>

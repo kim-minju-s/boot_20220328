@@ -2,6 +2,8 @@ package com.example.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.example.dto.MemberDTO;
 import com.example.service.MemberService;
 
@@ -74,5 +76,48 @@ public class SellerController {
         }
         return "redirect:/seller/update?email="+ member.getUemail();
     }
+
+    // 로그인 화면
+    // 127.0.0.1:9090/ROOT/seller/select
+    @GetMapping(value = "/select")
+    public String selectGET(){
+        return "/seller/select";
+    }
+
+    // 로그인하기
+    @PostMapping(value = "/select")
+    public String selectPOST(
+                HttpSession httpSession,
+                @ModelAttribute MemberDTO member){
+        // view에서 전달되는 값 확인
+        System.out.println(member.toString());
+
+        MemberDTO retMember = mService.selectMemberLogin(member);
+        // 반환되는 결과 (실패, 성공)
+        System.out.println(retMember.toString());
+
+        // 성공
+        if(retMember != null) {
+            // 세션에 정보를 기록(필요한 정보를 넣음)
+            // 자료가 유지되는 시간은 기본값 60*30 = 1800초
+            httpSession.setAttribute("SESSION_ROLE", retMember.getUrole());
+            httpSession.setAttribute("SESSION_EMAIL", retMember.getUemail());
+            httpSession.setAttribute("SESSION_NAME", retMember.getUname());
+
+    		return "redirect:/";
+    	}
+        
+    	// 실패
+    	return "redirect:/seller/select";
+
+    }
+
+    @RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
+    public String logoutGETPOST(HttpSession httpSession){
+        // 세션 데이터 지우기(초기화)
+        httpSession.invalidate();
+        return "redirect:/";
+    }
+
 
 }

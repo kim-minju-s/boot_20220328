@@ -23,4 +23,7 @@ public interface MemberService {
 
     // 판매자 수정
     public int updateMemberOne(MemberDTO member);
+
+    // 판매자 로그인
+    public MemberDTO selectMemberLogin(MemberDTO member);
 }

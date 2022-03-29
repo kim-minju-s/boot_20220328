@@ -18,6 +18,19 @@
 	</properties>
 	<dependencies>
 
+		<!-- h2 db -->
+		<dependency>
+    		<groupId>com.h2database</groupId>
+    		<artifactId>h2</artifactId>
+    		<scope>runtime</scope> <!-- *** 배포시에는 삭제 -->
+    	</dependency>
+
+		<!-- oracle session -->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-jdbc</artifactId>
+		</dependency>
+
 		<!-- oracle -->
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>

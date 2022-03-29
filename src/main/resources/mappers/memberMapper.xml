@@ -24,6 +24,10 @@
         UPDATE MEMBER SET UNAME=#{uname}, UPHONE=#{uphone} WHERE UEMAIL=#{uemail}
     </update>
 
+    <select id="selectMemberLogin" parameterType="com.example.dto.MemberDTO" resultType="com.example.dto.MemberDTO">
+        SELECT M.UEMAIL, M.UNAME, M.UPHONE, M.UROLE FROM MEMBER M WHERE M.UEMAIL=#{uemail} AND M.UPW=#{upw}
+    </select>
+
 </mapper>
 
 <!-- 

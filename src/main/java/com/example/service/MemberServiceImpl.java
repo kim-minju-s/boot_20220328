@@ -42,5 +42,11 @@ public class MemberServiceImpl implements MemberService {
         return sqlFactory.openSession().update("Member.updateMemberOne", member);
     }
 
+    @Override
+    public MemberDTO selectMemberLogin(MemberDTO member) {
+        // xml mapper 호출 Member id가 selectMemberLogin인 것
+        return sqlFactory.openSession().selectOne("Member.selectMemberLogin", member);
+    }
+
 
 }
