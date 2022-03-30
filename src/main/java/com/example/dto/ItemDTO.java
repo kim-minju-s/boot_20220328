@@ -18,9 +18,9 @@ public class ItemDTO {
     // 등록일
     private Date iregdate;
     // 이미지
-    private byte[] iimage;
+    private byte[] iimage;  //BLOB
     // 이미지사이즈
-    private Long iimagesize;
+    private Long iimagesize=0L;
     // 이미지타입
     private String iimagetype;
     // 이미지명

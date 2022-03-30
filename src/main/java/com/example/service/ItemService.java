@@ -17,6 +17,12 @@ public interface ItemService {
     public List<ItemDTO> selectItemList( Map<String, Object> map);
 
     // 물품개수 (페이지네이션)
-    public long selectItemCount(String txt);
+    public long selectItemCount(Map<String, Object> map);
+
+    // 물품 상세
+    public ItemDTO selectItemOne(long code);
+
+    // 이미지 가져오기
+    public ItemDTO selectItemImageOne(long code);
 
 }

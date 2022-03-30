@@ -14,15 +14,38 @@
                 I.ICODE, I.INAME, I.IPRICE, I.IQUANTITY, I.IREGDATE, ROW_NUMBER() OVER (ORDER BY ICODE DESC) ROWN 
             FROM ITEM I
             WHERE I.INAME LIKE '%' || #{txt} || '%'
+            AND I.UEMAIL = #{email}
         )
         WHERE ROWN BETWEEN #{start} AND #{end}
     </select>
 
-    <select id="selectItemCount" parameterType="String" resultType="long">
+    <select id="selectItemCount" parameterType="map" resultType="long">
             SELECT
                 COUNT(*) CNT 
             FROM ITEM I
             WHERE I.INAME LIKE '%' || #{txt} || '%'
+            AND I.UEMAIL = #{email}
+    </select>
+
+    <select id="selectItemOne" parameterType="long" resultType="com.example.dto.ItemDTO">
+        SELECT 
+            ICODE, INAME, ICONTENT, IPRICE, IQUANTITY, IREGDATE
+        FROM
+            ITEM
+        WHERE ICODE = #{code}
+    </select>
+
+    <!-- IIMAGE를 변환시켜줘야함 -->
+    <resultMap id="result1" type="com.example.dto.ItemDTO">
+        <result column="IIMAGE" property="iimage" jdbcType="BLOB" />
+    </resultMap>
+
+    <select id="selectItemImageOne" parameterType="long" resultMap="result1">
+        SELECT
+            ICODE, IIMAGE, IIMAGESIZE, IIMAGETYPE, IIMAGENAME
+        FROM
+            ITEM
+        WHERE ICODE = #{code}
     </select>
 
 </mapper>

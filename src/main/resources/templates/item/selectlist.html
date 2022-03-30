@@ -28,7 +28,7 @@
             <tr th:each="tmp, idx : ${list}">
                 <td th:text="${idx.count}"></td>
                 <td>
-                    <a th:href="@{/item/selectOne(code=${tmp.icode})}" th:text="${tmp.icode}"></a>
+                    <a th:href="@{/item/selectone(code=${tmp.icode})}" th:text="${tmp.icode}"></a>
                 </td>
                 <td th:text="${tmp.iname}"></td>
                 <td th:text="${tmp.iprice}"></td>
