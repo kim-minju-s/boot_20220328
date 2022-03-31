@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원주소 등록</title>
+</head>
+<body>
+    <div>
+        <h3>주소등록</h3>
+        <hr />
+        <a th:href="@{/home}">홈으로</a>
+        <form th:action="@{/member/addraction}" method="post">
+            주소     :  <input type="text" name="uaddresss"> <br />
+            우편번호 :  <input type="text" name="upostcode"> <br />
+            <input type="submit" value="주소 등록">
+        </form>
+        <hr />
+
+        <h3>주소 목록</h3>
+        <table border="1">
+            <tr>
+                <th>번호</th>
+                <th>주소코드</th>
+                <th>주소</th>
+                <th>우편번호</th>
+                <th>등록일</th>
+                <th>대표주소</th>
+                <th>버튼</th>
+            </tr>
+            <tr th:each="obj, idx : ${addr}">
+                <td th:text="${idx.count}"></td>
+                <td th:text="${obj.ucode}"></td>
+                <td th:text="${obj.uaddresss}"></td>
+                <td th:text="${obj.upostcode}"></td>
+                <td th:text="${obj.uregdate}"></td>
+                <td th:text="${obj.uchk}"></td>
+                <td>
+                    <!-- 전부 post로 보내줘야 보안상의 문제가 없음 -->
+                    <form th:action="@{/member/setaddr}" method="post">
+                        <input type="text" name="code" th:value="${obj.ucode}">
+                        <input type="submit" value="대표주소설정">
+                    </form>
+                    
+                    <form th:action="@{/member/updateaddr}" method="post">
+                        <input type="text" name="code" th:value="${obj.ucode}">
+                        <input type="submit" value="수정">
+                    </form>
+                    <a th:href="@{/member/deleteaddr(code=${obj.ucode})}">삭제</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
