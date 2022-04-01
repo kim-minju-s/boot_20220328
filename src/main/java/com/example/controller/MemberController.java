@@ -27,6 +27,46 @@ public class MemberController {
 
     @Autowired HttpSession httpSession;
 
+    @PostMapping(value = "/deleteaddr")
+    public String deleteaddrPOST(@RequestParam(name = "code") long code){
+        String em = (String)httpSession.getAttribute("M_EMAIL");
+
+        MaddrMapper.deleteMemberAddrOne(code, em);
+
+        return "redirect:/member/address";
+    }
+
+    // 주소 변경하기
+    @PostMapping(value = "/updateaddraction")
+    public String updateaddrPOST(@ModelAttribute MemberaddrDTO maddress){
+
+        System.out.println("주소"+ maddress.toString());
+        String em = (String)httpSession.getAttribute("M_EMAIL");
+        if (em != null) {
+            maddress.setUemail(em);
+            
+            MaddrMapper.updateMemberAddrOne(maddress);
+
+            return "redirect:/member/address";
+        }
+        return "redirect:/member/login";
+    }
+
+    // 주소 변경 화면
+    @GetMapping(value = "/updateaddr")
+    public String updateaddrGET( Model model,
+                @RequestParam(name="code") long code){
+
+        String em = (String)httpSession.getAttribute("M_EMAIL");
+        if (em != null) {
+            model.addAttribute("addr", MaddrMapper.selectMemberAddrOne(code, em));
+
+            return "/member/updateaddr";
+        }
+
+        return "redirect:/member/login";
+    }
+
     // 대표주소 설정
     @PostMapping(value="/setaddr")
     public String addrPOST(@RequestParam(name="code") long code){

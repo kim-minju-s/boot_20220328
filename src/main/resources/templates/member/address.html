@@ -39,15 +39,21 @@
                 <td>
                     <!-- 전부 post로 보내줘야 보안상의 문제가 없음 -->
                     <form th:action="@{/member/setaddr}" method="post">
-                        <input type="text" name="code" th:value="${obj.ucode}">
+                        <input type="hidden" name="code" th:value="${obj.ucode}">
                         <input type="submit" value="대표주소설정">
                     </form>
                     
-                    <form th:action="@{/member/updateaddr}" method="post">
-                        <input type="text" name="code" th:value="${obj.ucode}">
+                    <a th:href="@{/member/updateaddr(code=${obj.ucode})}">수정</a>
+                    <!-- <form th:action="@{/member/updateaddr}" method="post">
+                        <input type="hidden" name="code" th:value="${obj.ucode}">
                         <input type="submit" value="수정">
+                    </form> -->
+
+                    <!-- <a th:href="@{/member/deleteaddr(code=${obj.ucode})}">삭제</a> -->
+                    <form th:action="@{/member/deleteaddr}" method="post">
+                        <input type="hidden" name="code" th:value="${obj.ucode}" />
+                        <input type="submit" value="주소 삭제" />
                     </form>
-                    <a th:href="@{/member/deleteaddr(code=${obj.ucode})}">삭제</a>
                 </td>
             </tr>
         </table>
