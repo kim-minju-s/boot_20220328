@@ -4,10 +4,18 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
+@EnableAspectJAutoProxy
 // 컨트롤러, 환경파일, 서비스(Mybatis 1버전)
-@ComponentScan(basePackages = {"com.example.controller", "com.example.service","com.example.config"})
+@ComponentScan(basePackages = {
+	"com.example.controller",
+	"com.example.service",
+	"com.example.config",
+	"com.example.aop",	// aop추가
+	"com.example.interceptor"
+})
 // Mapper (Mybatis 2버전용)
 @MapperScan(basePackages = "com.example.mapper")
 public class Boot20220328Application {

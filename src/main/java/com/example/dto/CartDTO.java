@@ -1,11 +1,13 @@
 package com.example.dto;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import lombok.Data;
 
 @Data
 public class CartDTO {
+    public static CartDTO cart;
     // 카트번호
     private Long cno;
     // 수량

@@ -141,8 +141,11 @@ public class MemberController {
             httpSession.setAttribute("M_EMAIL", member.getUemail());
             httpSession.setAttribute("M_NAME", member.getUname());
             httpSession.setAttribute("M_ROLE", member.getUrole());
-            // return "redirect:/";
+            // 로그인 성공
+            String url = (String)httpSession.getAttribute("BACKURL");
+            return "redirect:" + url;
         }
+        // 로그인 실패
         return "redirect:/member/login";
     }
 

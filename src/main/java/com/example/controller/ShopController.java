@@ -3,11 +3,15 @@ package com.example.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.example.dto.BuyDTO;
+import com.example.dto.CartDTO;
 import com.example.dto.ItemDTO;
 import com.example.dto.ItemImageDTO;
+import com.example.mapper.BuyMapper;
 import com.example.mapper.CartMapper;
 import com.example.mapper.ItemImageMapper;
 import com.example.mapper.ItemMapper;
@@ -34,29 +38,56 @@ public class ShopController {
     @Autowired ResourceLoader resLoader;
     @Autowired HttpSession httpSession;
     @Autowired CartMapper cMapper;
+    @Autowired BuyMapper bMapper;
+
+    @GetMapping(value="/buylist")
+    public String buylistGET(Model model){
+        String em = (String)httpSession.getAttribute("M_EMAIL");
+        if(em == null){ // 로그인 되지 않았을 때
+            return "redirect:/member/login";
+        }
+        // 로그인 되었을 때
+        List< Map<String, Object> > list = bMapper.selectBuyListMap(em);
+        
+        model.addAttribute("list", list);
+
+        return "/shop/buylist";
+    }
 
     // 장바구니에 물품등록
     @PostMapping(value="/cart")
     public String cartPOST(
+            @RequestParam(name="btn") String btn,
             @RequestParam(name="code") long code,
             @RequestParam(name="cnt") long cnt){
 
         String em = (String)httpSession.getAttribute("M_EMAIL");
-        String em1 = (String)httpSession.getId();
-        if(em != null){
-            // System.out.println(code);
-            // System.out.println(cnt);
-            // System.out.println(em);
-            cMapper.addCartOne(code, em, cnt);
 
+        if(em == null){ // 로그인 되지 않았다면
+            return "redirect:/member/login";
         }
-        else {
-            // 로그인 되지 않았을 때는 고유한 값을 ex) 세션의키
-            // System.out.println("고유값-->"+httpSession.getId());
-            cMapper.addCartOne(code, em1, cnt);
+        if(btn.equals("장바구니")){
+            // 로그인 되었다면
+            CartDTO cart = new CartDTO();
+            cart.setCcnt(cnt);
+            cart.setIcode(code);
+            cart.setUemail(em);
+            
+            cMapper.addCartOne(cart);
+    
+            return "redirect:/shop/detail?code="+code;
         }
+        else if(btn.equals("주문하기")){
+            BuyDTO buy = new BuyDTO();
+            buy.setBcnt(cnt);
+            buy.setIcode(code);
+            buy.setUemail(em);
 
-        return "redirect:/shop/detail?code="+code;
+            bMapper.insertBuyOne(buy);
+
+            return "redirect:/shop/buylist";
+        }
+        return "redirect:/";
     }
 
     // 서브이미지 출력
