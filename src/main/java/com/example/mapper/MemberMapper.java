@@ -23,5 +23,13 @@ public interface MemberMapper {
             // Param 의 value가 변수, String email은 받는값 
             @Param(value = "email") String email,
             @Param(value = "pw") String pw);
-  
+
+    // MemberDetails
+    // SELECT 컬럼명들 FROM 테이블명 WHERE 조건 AND 조건
+    @Select({"SELECT UEMAIL, UPW, UNAME, UPHONE, UROLE FROM MEMBER",
+            " WHERE UEMAIL=#{email}"})
+    public MemberDTO memberEmail(
+            // Param 의 value가 변수, String email은 받는값 
+            @Param(value = "email") String email);
+
 }

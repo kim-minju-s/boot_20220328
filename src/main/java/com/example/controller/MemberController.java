@@ -27,6 +27,7 @@ public class MemberController {
 
     @Autowired HttpSession httpSession;
 
+
     @PostMapping(value = "/deleteaddr")
     public String deleteaddrPOST(@RequestParam(name = "code") long code){
         String em = (String)httpSession.getAttribute("M_EMAIL");
